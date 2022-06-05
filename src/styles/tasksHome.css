@@ -1,0 +1,268 @@
+body{
+    background-color: white;
+}
+.tasksHome{
+    width: 100%;
+    height: 100vh;
+    background: white;
+    display: grid;
+    grid-template-columns: 1fr;
+    position: static;
+    overflow: hidden;
+}
+.categoriesPanel{
+    background-color: white;
+    filter: brightness(0.95);
+    width: 65%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    overflow-x: hidden;
+    box-shadow: 20px 0px 25px 0px rgba(128, 128, 128, 0.26);
+    z-index: 7;
+}
+.categoriesPanel::before{
+    content: 'Categories';
+    display: flex;
+    width: 100%;
+    height: 50px;
+    position: sticky;
+    top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden;
+    padding-top: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+.categoriesPanel > button{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 100%;
+    height: 60px;
+    background-color: transparent;
+    border: none;
+    margin-left: 20px;
+}
+.categoriesPanel > button > img{
+    width: 20px;
+}
+.categoriesPanel > .categoryLink{
+    display: flex;
+    width: 100%;
+    background-color: white;
+    padding-left: 19px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    font-size: 26px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black
+}
+.categoriesPanel > .categoryLink > div{
+    width: 100%;
+}
+.tasksDisplay > header{
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    width: 100%;
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    z-index: 6;
+    box-shadow: 0px 7px 10px 0px #f3f3f385;
+}
+.tasksDisplay > header > h1::first-letter{
+    text-transform: uppercase;
+}
+.tasksDisplay > header > button{
+    border: none;
+    background-color: transparent;
+    width: 40px;
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 30px;
+}
+.tasksDisplay > header > button > img{
+    width: 100%;
+}
+.tasksList{
+    max-width: 100%;
+    max-height: 100vh;
+    justify-content: center;
+    display: block;
+    overflow-x: hidden;
+    padding: 18px;
+}
+.tasksList > div{
+    display: inline-grid;
+    grid-template-rows: 40px 1fr;
+    min-width: 130px;
+    max-width: 170px;
+    background-color: var(--task-color);
+    margin: 10px;
+    padding: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.tasksList > div:active{
+    transform: scale(1.1);
+    opacity: 0;
+    animation: openTaskDisplay2 0.1s ease;
+}
+.tasksList > div > p{
+    width: 100%;
+    overflow: hidden;
+    display: block;
+    text-overflow: ellipsis;
+    font-size: 1.4em;
+    font-weight: bold;
+}
+.tasksList > div > section{
+    margin-top: 3px;
+    font-size: 1.2em;
+}
+.newTaskBtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 80px;
+    right: 50px;
+    background: var(--principal-color);
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 20px 0px #80808012, 0px 0px 7px 0px #00000012;
+}
+.newTaskBtn > img{
+    width: 60%;
+    filter: invert(1);
+}
+.taskEditDisplay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 8;
+    background-color: var(--task-color);
+}
+.taskEditDisplay > header{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    height: 70px;
+    background-color: transparent;
+    box-shadow: 0px 5px 10px 0px #00000014;
+}
+.taskEditDisplay > header > input{
+    border: none;
+    font-size: 27px;
+    margin-left: 30px;
+    background-color: transparent;
+    max-width: 260px;
+    font-weight: bold;
+}
+.taskEditDisplay > header > button{
+    border: none;
+    border-radius: 5px;
+    background: var(--task-color);
+    font-size: 20px;
+    padding: 7px;
+    filter: brightness(0.8);
+}
+.taskEditDisplay > section{
+    margin-top: 30px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.taskEditDisplay > section > textarea{
+    width: 90%;
+    height: 100%;
+    border: none;
+    resize: none;
+    font-size: 18px;
+    background-color: transparent;
+}
+.openTaskDisplay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: var(--task-color);
+    z-index: 8;
+    left: 0;
+    animation: openTaskDisplay 0.1s ease-out;
+}
+.openTaskDisplay > header{
+    height: 70px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.openTaskDisplay > header > h1{
+    margin-left: 30px;
+    margin-top: 10px;
+    font-size: 2.3em;
+    width: 80%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.openTaskDisplay > header > button{
+    width: 40px;
+    margin-left: auto;
+    margin-right: 20px;
+    background-color: transparent;
+    border: none
+}
+.openTaskDisplay > header > button > img{
+    width: 65%;
+}
+.openTaskDisplay > p{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    font-size: 1.3em;
+}
+.openTaskDisplay > button{
+    position: absolute;
+    bottom: 75px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    border: none;
+    background: black;
+}
+.openTaskDisplay > button > img{
+    width: 50%;
+    filter: invert(1);
+}
+
+@keyframes openTaskDisplay {
+    0%{opacity: 0; transform: scale(.98)}
+    100%{opacity: 1; transform: scale(1)}
+}
+@keyframes openTaskDisplay2 {
+    0%{opacity: 1; transform: scale(1)}
+    100%{opacity: 0; transform: scale(1.1)}
+}

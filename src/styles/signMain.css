@@ -1,0 +1,150 @@
+body{
+    background: var(--principal-color);
+}
+
+.signHeader{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 120px 1fr;
+    padding-bottom: 40px;
+    width: 100%;
+    background: var(--principal-color);
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    height: 92vh;
+}
+
+.signHeader > h1{
+    margin-left: 35px;
+    margin-top: 20px;
+    font-size: 35px;
+}
+
+.signHeader > section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.signHeader > section > img{
+    width: 300px;
+    filter: invert(1) drop-shadow(0px 0px 5px white);
+    animation: imgMoving 10s ease-in-out infinite;
+}
+
+.signHeader > section > div{
+    margin-top: 75px;
+    width: 80%;
+}
+
+.signHeader > section > div > button{
+    width: 100%;
+    display: block;
+    padding: 10px;
+    padding-left: 19px;
+    padding-right: 19px;
+    border: none;
+    font-size: 20px;
+    margin-top: 15px;
+    border-radius: 7px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 1px 0px #0000001a;
+}
+
+.signHeader > section > p{
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+    opacity: 0.9;
+    font-weight: 600;
+    transition: 0;
+}
+
+.signHeader > img{
+    width: 30px;
+    padding: 13px;
+    position: absolute;
+    cursor: pointer;
+}
+
+@media (min-width: 780px){
+    body{
+        overflow: hidden;
+    }
+    .signHeader{
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+        height: 95.5vh;
+    }
+    .signHeader > h1{
+        font-size: 80px;
+        transform: translateY(40%);
+        margin-left: 70px;
+        text-shadow: 5px 6px 0px white;
+    }
+    .signHeader::before{
+        content: '';
+        display: block;
+        width: 50%;
+        height: 150vh;
+        background-color: white;
+        position: absolute;
+        top: 0;
+        left: var(--beforeLeft);
+        transform: rotate(-20deg) translate(-30%, -20%);
+    }
+    .signHeader > section{
+        align-items: center;
+        height: 100%;
+        margin-top: 150px;
+    }
+    .signHeader > section > img{
+        width: 200px;
+    }
+    .signHeader > section > div{
+        display: flex;
+        justify-content: center;
+    }
+    .signHeader > section > div > button{
+        display: inline-block;
+        width: auto;
+        margin-right: 15px;
+        margin-left: 15px;
+        font-size: 18px;
+        padding: 7px;
+        padding-left: 23px;
+        padding-right: 23px;
+        cursor: pointer;
+        background: transparent;
+        border: 1px solid white;
+        box-shadow: 0px 0px 0px 6px #ffffff52, inset 0px 0px 0px 0px #ffffff52;
+        color: #938012;
+        transition: 0.2s;
+    }
+    .signHeader > section > div > button:focus{
+        box-shadow: 0px 0px 0px 0px #ffffff52, inset 0px 0px 0px 6px #ffffff52;
+    }
+    .signHeader > section > p{
+        position: absolute;
+        text-shadow: -2px 2px 0px var(--principal-color);
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        font-size: 19px;
+        font-weight: bold;
+    }
+}
+
+@keyframes imgMoving{
+    0%{
+        transform: translate(0%, -5%);
+    }
+    50%{
+        transform: translate(0, 0);
+    }
+    100%{
+        transform: translate(0%, -5%);
+    }
+}
