@@ -66,7 +66,7 @@ export default class Sign extends React.Component{
                 <header className="signHeader" style={headerStyle}>
                     {this.state.openSignForm ? <img onClick={this.closeSignForm} src={cross} alt="" /> : null}
                     <Signin logInUser={this.logInUser} notificationAlert={this.props.notificationAlert} loadUsers={this.props.loadUsers} style={signinStyle}/>
-                    <Signup notificationAlert={this.props.notificationAlert} loadUsers={this.props.loadUsers} style={signupStyle}/>
+                    <Signup logInUser={this.logInUser} notificationAlert={this.props.notificationAlert} loadUsers={this.props.loadUsers} style={signupStyle}/>
 
                     <h1>Thodu</h1>
                     <section>

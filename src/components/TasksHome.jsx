@@ -10,6 +10,7 @@ import '../styles/tasksHome.css'
 import TasksList from "./TasksList";
 import TaskEditDisplay from "./TaskEditDisplay";
 import OpenTaskDisplay from "./OpenTaskDisplay";
+import NewCategoryDisplay from "./NewCategoryDisplay";
 
 //Images
 import mainLinesImg from '../images/mainLines.png'
@@ -27,13 +28,14 @@ export default class TasksHome extends React.Component{
         categoriesPanelOpen: false,
         editingTask: false,
         openTask: false,
-        taskOpened: []
+        taskOpened: {},
+        openNewTaskCategory: false
     }
 
     loadTasksCategories = async (document) => {
         this.props.loadProfileDoc(this.state.userMail).then(res => {
             this.setState({
-                taskCategories: res.data().taskCategories
+                taskCategories: res.data().taskCategories.length > 0 ? res.data().taskCategories : []
             })
         })
         
@@ -89,7 +91,7 @@ export default class TasksHome extends React.Component{
         }
     }
 
-    createNewTask = async (titleTask) => {
+    createNewTask = (titleTask) => {
         this.props.loadProfileDoc(this.state.userMail).then(async profile => {
 
             let newProfileTask = profile.data().tasks
@@ -97,20 +99,57 @@ export default class TasksHome extends React.Component{
             let newTask = {
                 title: titleTask,
                 content: '',
-                date: this.date,
+                date: this.date(),
                 done: false,
-                category: this.state.taskCategorySelect
+                category: this.state.taskCategorySelect,
+                color: '#f7d716'
             }
             newProfileTask.push(newTask)
+
             let newProfile = {
                 name: profile.data().name,
                 mail: profile.data().mail,
                 pass: profile.data().pass,
-                categories: profile.data().categories,
+                taskCategories: profile.data().taskCategories,
                 tasks: newProfileTask
             }
 
-            console.log(newProfile)
+            await setDoc(doc(db, 'users', profile.id), newProfile)
+
+            this.setState({
+                taskOpened: newTask
+            }, () => {
+                this.openEditTaskDisplay()
+            })
+            
+
+
+        })
+    }
+
+    createNewCategory = (category) => {
+        this.props.loadProfileDoc(this.state.userMail).then(async profile => {
+
+            let newProfile = profile.data()
+
+            newProfile.taskCategories.push(category)
+
+            await setDoc(doc(db, 'users', profile.id), newProfile)
+
+        })
+    }
+
+    modifiProfileTask = (task, oldTask) => {
+        this.props.loadProfileDoc(this.state.userMail).then(async profile => {
+
+            let tasks = profile.data().tasks.filter(profileTask => profileTask.title != oldTask)
+            let userProfile = profile.data()
+
+            tasks.push(task)
+
+            userProfile.tasks = tasks
+
+            await setDoc(doc(db, 'users', profile.id), userProfile)
 
         })
     }
@@ -133,6 +172,22 @@ export default class TasksHome extends React.Component{
             editingTask: true
         })
     }
+    closeEditTaskDisplay = () => {
+        this.setState({
+            editingTask: false
+        })
+    }
+
+    openNewTaskCategorydisplay = () => {
+        this.setState({
+            openNewTaskCategory: true
+        })
+    }
+    closeNewTaskCategorydisplay = () => {
+        this.setState({
+            openNewTaskCategory: false
+        })
+    }
  
     componentDidMount(){
 
@@ -143,7 +198,7 @@ export default class TasksHome extends React.Component{
                 this.loadTasksCategories()
                 this.loadTasks()
         
-                this.setTasksSelected(('"'+window.location+'"').split('/', 100)[('"'+window.location+'"').split('/', 100).length-1].split('"'))
+                this.setTasksSelected('tasks')
             });
         })
     }
@@ -157,8 +212,9 @@ export default class TasksHome extends React.Component{
         return (
             <React.Fragment>
                     <main className="tasksHome">
-                        {this.state.editingTask ? <TaskEditDisplay task={this.state.taskOpened}/> : null}
+                        {this.state.editingTask ? <TaskEditDisplay modifiProfileTask={this.modifiProfileTask} close={this.closeEditTaskDisplay} task={this.state.taskOpened}/> : null}
                         {this.state.openTask ? <OpenTaskDisplay openEdit={this.openEditTaskDisplay} close={this.closeTask} task={this.state.taskOpened}/> : null}
+                        {this.state.openNewTaskCategory ? <NewCategoryDisplay close={this.closeNewTaskCategorydisplay} createCategory={this.createNewCategory} /> : null}
 
                         <div style={categoriesPanelStyles} className="categoriesPanel">
                             <button onClick={() => this.openCategoriesPanel()}><img src={crossImg} alt="" /></button>
@@ -168,7 +224,7 @@ export default class TasksHome extends React.Component{
                                         background: this.state.taskCategorySelect === 'tasks' ? 'var(--principal-color)' : 'white',
                                     }} className="categoryLink" to='tasks'><div onClick={() => {this.setTasksSelected('tasks'); this.openCategoriesPanel()}}><p>Tasks</p></div></Link>
                         {
-                            this.state.taskCategories.map(category => {
+                            this.state.taskCategories != false ? this.state.taskCategories.map(category => {
                                 return (
                                     <Link style={{
                                         PaddingLeft: this.state.taskCategorySelect === category ? '6px' : 'none',
@@ -176,8 +232,9 @@ export default class TasksHome extends React.Component{
                                         background: this.state.taskCategorySelect === category ? 'var(--principal-color)' : 'white',
                                     }} className="categoryLink" key={category} to={category}><div onClick={() => {this.setTasksSelected(category); this.openCategoriesPanel()}}><p>{category}</p></div></Link>
                                 )
-                            })
+                            }) : null
                         }
+                        <div onClick={() => this.openNewTaskCategorydisplay()}>New category</div>
                         </div>
                         <div className="tasksDisplay">
                             <header><button onClick={() => this.openCategoriesPanel()}><img src={mainLinesImg} alt="" /></button><h1>{this.state.taskCategorySelect}</h1></header>

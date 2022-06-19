@@ -72,6 +72,20 @@ body{
 .categoriesPanel > .categoryLink > div{
     width: 100%;
 }
+.categoriesPanel > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    font-size: 28px;
+    background-color: var(--principal-color);
+    cursor: pointer;
+}
 .tasksDisplay > header{
     position: sticky;
     top: 0;
@@ -117,6 +131,7 @@ body{
     padding: 18px;
     border-radius: 10px;
     cursor: pointer;
+    overflow: hidden;
 }
 .tasksList > div:active{
     transform: scale(1.1);
@@ -128,6 +143,7 @@ body{
     overflow: hidden;
     display: block;
     text-overflow: ellipsis;
+    white-space: nowrap;
     font-size: 1.4em;
     font-weight: bold;
 }
@@ -140,11 +156,11 @@ body{
     justify-content: center;
     align-items: center;
     position: absolute;
-    bottom: 80px;
-    right: 50px;
+    bottom: 66px;
+    right: 40px;
     background: var(--principal-color);
-    width: 70px;
-    height: 70px;
+    width: 65px;
+    height: 65px;
     border-radius: 20px;
     box-shadow: 0px 0px 20px 0px #80808012, 0px 0px 7px 0px #00000012;
 }
@@ -158,8 +174,18 @@ body{
     height: 100%;
     top: 0;
     left: 0;
-    z-index: 8;
+    z-index: 9;
     background-color: var(--task-color);
+    animation: openDisplay 0.1s ease-out;
+    overflow: hidden;
+}
+.taskEditDisplay > button{
+    position: absolute;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    height: 70px;
+    margin-left: 24px;
 }
 .taskEditDisplay > header{
     display: flex;
@@ -172,9 +198,10 @@ body{
 .taskEditDisplay > header > input{
     border: none;
     font-size: 27px;
-    margin-left: 30px;
+    margin-left: 115px;
+    margin-right: 15px;
     background-color: transparent;
-    max-width: 260px;
+    max-width: 46%;
     font-weight: bold;
 }
 .taskEditDisplay > header > button{
@@ -194,11 +221,46 @@ body{
 }
 .taskEditDisplay > section > textarea{
     width: 90%;
-    height: 100%;
+    height: 70%;
     border: none;
     resize: none;
     font-size: 18px;
     background-color: transparent;
+    overflow-y: scroll;
+}
+.taskEditDisplay > div{
+    background-color: white;
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+
+}
+.taskEditDisplay > div > .selColorTaskBtn{
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 100px;
+    border: 1px solid black;
+    display: inline-flex;
+    align-items: center;
+    margin: 10px;
+    margin-left: 10px;
+}
+.taskEditDisplay > div > .selColorTaskBtn::after{
+    content: '';
+    background-color: var(--task-color);
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin: 5px;
+    margin-left: 10px;
+    border-radius: 100%;
+}
+.taskEditDisplay > div > .selColorTaskBtn > button{
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
 }
 .openTaskDisplay{
     position: absolute;
@@ -207,13 +269,15 @@ body{
     background-color: var(--task-color);
     z-index: 8;
     left: 0;
-    animation: openTaskDisplay 0.1s ease-out;
+    animation: openDisplay 0.1s ease-out;
+    overflow: hidden;
 }
 .openTaskDisplay > header{
-    height: 70px;
+    min-height: 70px;
     width: 100%;
     display: flex;
     align-items: center;
+    margin-top: 20px;
 }
 .openTaskDisplay > header > h1{
     margin-left: 30px;
@@ -225,20 +289,31 @@ body{
 }
 .openTaskDisplay > header > button{
     width: 40px;
-    margin-left: auto;
-    margin-right: 20px;
     background-color: transparent;
-    border: none
+    border: none;
+    position: fixed;
+    right: 25px;
+    top: 40px;
 }
 .openTaskDisplay > header > button > img{
     width: 65%;
 }
-.openTaskDisplay > p{
-    width: 85%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
+.openTaskDisplay > textarea{
+    max-width: 85%;
+    max-height: 70%;
+    min-width: 85%;
+    min-height: 70%;
+    resize: none;
+    background-color: transparent;
+    border: none;
+    margin-left: 50%;
+    margin-top: 40px;
+    transform: translateX(-50%);
     font-size: 1.3em;
+    overflow-y: scroll;
+}
+.openTaskDisplay > textarea:disabled{
+    color: black;
 }
 .openTaskDisplay > button{
     position: absolute;
@@ -257,8 +332,85 @@ body{
     width: 50%;
     filter: invert(1);
 }
+.chooseColorDisplay{
+    display: grid !important;
+    place-content: center !important;
+    grid-gap: 10px !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -130%) scale(1) !important;
+    width: 250px !important;
+    height: 190px !important;
+    grid-template-columns: repeat(3, 60px) !important;
+    grid-template-rows: repeat(2, 60px) !important;
+    z-index: 10 !important;
+    background-color: white !important;
+    border-radius: 20px !important;
+    animation: openChooseColorDisplay 0.2s ease-out !important;
+    animation-delay: 1000;
+}
+.chooseColorDisplay > button{
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 7px;
+}
+.newCategoryDisplay{
+    position: absolute;
+    background: rgba(255, 255, 255, 0.555);
+    width: 100%;
+    height: 100%;
+    z-index: 8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    animation: openDisplay 0.2s ease-out;
+}
+.newCategoryDisplay > button{
+    width: 30px;
+    opacity: .6;
+    background: transparent;
+    border: none;
+    margin-right: auto;
+    margin-left: 45px;
+    margin-top: -150px;
+}
+.newCategoryDisplay > button > img{
+    width: 100%;
+}
+.newCategoryDisplay > h1{
+    font-size: 1.8em;
+    margin-top: 15px;
+    margin-bottom: 30px
+}
+.newCategoryDisplay > div > input{
+    border: none;
+    background: var(--principal-color);
+    padding: 10px;
+    font-size: 1.25em;
+    color: black;
+    border-radius: 10px
+}
+.newCategoryDisplay > div > button{
+    border: none;
+    background-color: black;
+    color: white;
+    font-size: 1.3em;
+    display: block;
+    margin-left: auto;
+    margin-top: 15px;
+    margin-right: 10px;
+    padding: 7px;
+    border-radius: 7px
+}
 
-@keyframes openTaskDisplay {
+@keyframes openChooseColorDisplay {
+    0%{opacity: 0; transform: translate(-50%, -130%) scale(0.98)}
+    100%{opacity: 1; transform: translate(-50%, -130%) scale(1)}
+}
+@keyframes openDisplay {
     0%{opacity: 0; transform: scale(.98)}
     100%{opacity: 1; transform: scale(1)}
 }

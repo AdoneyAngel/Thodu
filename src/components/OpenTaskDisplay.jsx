@@ -11,8 +11,8 @@ export default function OpenTaskDisplay (props){
                 <button onClick={() => props.close(true)}><img src={crossImg} alt="" /></button>
             </header>
 
-            <p>{props.task.content}</p>
-            <button onClick={() => {props.openEdit(); props.close(false)}}><img src={pencilImg} alt="" /></button>
+            <textarea disabled value={props.task.content}>{props.task.content}</textarea>
+            <button onClick={() => {props.openEdit(); setTimeout(() => props.close(false), 200) }}><img src={pencilImg} alt="" /></button>
         </div>
     )
 }

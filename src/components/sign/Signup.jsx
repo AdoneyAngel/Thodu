@@ -27,9 +27,11 @@ export default class Signup extends React.Component{
             name: name,
             mail: mail,
             pass: pass,
-            categories: {},
+            taskCategories: [],
             tasks: []
         })
+
+        this.props.logInUser(name, mail)
 
         window.location = 'tasksHome/tasks'
     }
