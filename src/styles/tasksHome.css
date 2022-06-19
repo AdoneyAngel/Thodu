@@ -171,13 +171,23 @@ body{
 .taskEditDisplay{
     position: absolute;
     width: 100%;
-    height: 100%;
-    bottom: 0;
+    height: 90%;
+    top: 0;
     left: 0;
     z-index: 9;
     background-color: var(--task-color);
     animation: openDisplay 0.1s ease-out;
-    overflow: hidden;
+    overflow: visible;
+}
+.taskEditDisplay::after{
+    content: '';
+    background-color: var(--task-color);
+    width: 100%;
+    height: 20%;
+    position: absolute;
+    transform: translateY(99.7%);
+    display: block;
+    bottom: 0;
 }
 .taskEditDisplay > button{
     position: absolute;
